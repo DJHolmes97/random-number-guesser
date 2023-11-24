@@ -1,0 +1,62 @@
+/* The switch container */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 4rem; /* Adjust as needed */
+  height: 2rem; /* Adjust as needed */
+  @apply h-8 w-16;
+}
+
+/* The checkbox is visually hidden but remains accessible */
+.theme-switch-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The label is the visual representation of the switch */
+.theme-switch-label {
+  display: block;
+  overflow: hidden;
+  height: 2rem; /* Same as container height */
+  border-radius: 9999px; /* Full roundness */
+  cursor: pointer;
+  background-color: var(--primary); /* Using the custom property */
+  transition: background-color 0.3s ease-in-out;
+  position: relative;
+  @apply h-8;
+}
+
+.theme-switch-label:hover,
+.theme-switch-label:focus {
+  background-color: var(--secondary); /* Change for hover state */
+}
+
+.theme-switch-label:active {
+  transform: scale(0.95); /* Shrink on click */
+  background-color: var(--accent); /* Change for active state */
+}
+
+/* The knob of the switch */
+.theme-switch-knob {
+  position: absolute;
+  width: 1.75rem; /* Adjust as needed */
+  height: 1.75rem; /* Adjust as needed */
+  margin: 0.125rem;
+  padding: 5px;
+  border-radius: 50%; /* Circular shape */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  transition: transform 0.3s ease-in-out;
+  background-color: var(--background); /* Using the custom property */
+  @apply h-7 w-7;
+}
+
+/* Styling for when the checkbox is checked */
+.theme-switch-checkbox:checked + .theme-switch-label {
+  background-color: var(--secondary); /* Change for checked state */
+}
+
+.theme-switch-label .theme-switch-knob.theme-switch-knob--checked {
+  /* Optionally change knob color or content on checked */
+  @apply translate-x-8;
+}

@@ -1,0 +1,11 @@
+.header-component {
+  @apply flex w-full py-3 px-4 items-center justify-center sticky top-0 z-10 border-b border-solid border-[var(--accent-opacity-50)];
+}
+
+.header-component__wrapper {
+  @apply flex flex-col md:flex-row max-w-full justify-between items-center gap-2 w-full md:max-w-screen-lg;
+}
+
+.header-component__header {
+  @apply md:text-2xl text-xl font-bold text-center;
+}
