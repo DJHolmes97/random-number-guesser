@@ -1,0 +1,14 @@
+.button-component {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-base);
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.button-component--primary {
+  background-color: var(--primary);
+  border-color: invisible;
+  color: #fff;
+}

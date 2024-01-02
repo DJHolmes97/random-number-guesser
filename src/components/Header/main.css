@@ -1,5 +1,7 @@
 .header-component {
-  @apply flex w-full py-3 px-4 items-center justify-center sticky top-0 z-10 border-b border-solid border-[var(--accent-opacity-50)];
+  background-color: var(--background);
+  @apply flex w-full
+    items-center justify-center sticky top-0 z-10 py-6 px-6;
 }
 
 .header-component__wrapper {

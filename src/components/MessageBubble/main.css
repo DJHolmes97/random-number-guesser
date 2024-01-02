@@ -1,0 +1,51 @@
+.message-bubble {
+  position: relative;
+  max-width: 60%;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin: 10px;
+  width: fit-content;
+  font-family: Arial, sans-serif;
+}
+
+.player {
+  background-color: var(--primary); /* Light green background for the player */
+  margin-left: auto; /* Align the bubble to the right */
+  color: var(--text-white);
+  /* Create the spike to the right */
+  &:after {
+    content: "";
+    position: absolute;
+    right: -10px; /* Position the spike to the right of the bubble */
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-left-color: var(--primary); /* Same color as the bubble */
+    border-right: 0;
+    border-top: 0;
+    margin-top: -5px; /* Adjust the position */
+    transform: translate(0, -50%);
+  }
+}
+
+.opponent {
+  background-color: var(
+    --background-alt
+  ); /* White background for the opponent */
+  /* Create the spike to the left */
+  &:before {
+    content: "";
+    position: absolute;
+    left: -10px; /* Position the spike to the left of the bubble */
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-right-color: var(--background-alt); /* Same color as the bubble */
+    border-left: 0;
+    border-top: 0;
+    margin-top: -5px; /* Adjust the position */
+    transform: translate(0, -50%);
+  }
+}

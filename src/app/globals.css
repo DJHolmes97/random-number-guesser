@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  font-size: 16px;
+
+  --border-radius-base: 1rem;
+
+  --size-spacing-xs: 0.125rem;
+  --size-spacing-sm: 0.25rem;
+  --size-spacing-md: 0.5rem;
+  --size-spacing-lg: 0.75rem;
+  --size-spacing-xl: 1rem;
+  --size-spacing-2xl: 1.25rem;
+}
+
 :root,
 :root[data-theme="light"] {
   --text: #030005;
@@ -12,6 +25,13 @@
   --accent-opacity-50: #7a04c850;
 
   --primary-shade-50: #510f7d;
+
+  --background-alt: #d9c6e5;
+  --background-alt-2: #c1b0cb;
+
+  --background-alt-opacity-0: #d9c6e500;
+
+  --text-white: #fdfaff;
 }
 :root[data-theme="dark"] {
   --text: #fdfaff;
@@ -22,6 +42,11 @@
   --accent-opacity-50: #ad37fb50;
 
   --primary-shade-50: #510f7d;
+
+  --background-alt: #2d1a39;
+  --background-alt-2: #45344f;
+
+  --background-alt-opacity-0: #2d1a3900;
 }
 
 body {
@@ -30,4 +55,39 @@ body {
 }
 svg {
   color: var(--text);
+}
+
+p {
+  font-size: 1rem;
+  font-weight: 400; /* Normal weight for body text */
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700; /* Bold weight for primary titles */
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 600; /* Slightly less bold than h1, for secondary titles */
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: 500; /* Medium weight for subheadings */
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 500; /* Medium weight for smaller subheadings */
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: 400; /* Normal weight, as it's the same size as body text */
+}
+
+caption {
+  font-size: 0.75rem;
+  font-weight: 400; /* Normal weight for captions, which are smaller and less prominent */
 }
