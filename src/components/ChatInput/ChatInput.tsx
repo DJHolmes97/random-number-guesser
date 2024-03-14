@@ -1,3 +1,4 @@
+"use client"
 import { ChangeEvent } from "react"
 import "./main.css"
 
@@ -9,14 +10,26 @@ type ChatInputProps = {
 
 const ChatInput = ({ value, onChange, onSubmit }: ChatInputProps) => {
   return (
-    <div className="chat-input">
+    <div className="chat-input-wrapper">
       <input
         type="text"
         value={value}
         onChange={onChange}
-        onSubmit={onSubmit}
+        className="chat-input"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onSubmit()
+          }
+        }}
       />
-      <button>Send</button>
+      <button
+        className="chat-input-button"
+        onClick={() => {
+          onSubmit()
+        }}
+      >
+        Send
+      </button>
     </div>
   )
 }

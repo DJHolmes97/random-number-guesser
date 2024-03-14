@@ -1,3 +1,11 @@
 .game-container-wrapper {
-  @apply flex flex-col max-w-5xl w-full;
+  @apply flex flex-col relative max-w-5xl w-full h-full;
+}
+
+.messages-wrapper {
+  @apply flex flex-col;
+}
+
+.input-wrapper {
+  @apply absolute bottom-0 w-full;
 }

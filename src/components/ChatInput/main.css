@@ -1,3 +1,13 @@
+.chat-input-wrapper {
+  @apply flex flex-row w-full p-2;
+}
+
 .chat-input {
-  @apply flex flex-row w-full;
+  @apply flex-grow rounded-l-xl px-2;
+}
+
+.chat-input-button {
+  background-color: var(--primary); /* Light green background for the player */
+  color: var(--text-white);
+  @apply px-4 py-3 rounded-r-xl;
 }
