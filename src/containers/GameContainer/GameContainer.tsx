@@ -42,6 +42,14 @@ const generateDiffValue = (firstValue: number, secondValue: number) => {
   }
 }
 
+const isGuessHigherThanAnswer = (guess: number, answer: number) => {
+  if (guess > answer) {
+    return true
+  } else {
+    return false
+  }
+}
+
 const getBoilingHotValue = () => {
   return Math.round(0.1 * RANGE_GAP)
 }
@@ -81,12 +89,14 @@ const GameContainer = () => {
   }
 
   useEffect(() => {
-    console.log("answer", answer)
     const mostRecentMessage = messages[messages.length - 1]
-    console.log(mostRecentMessage)
     const diff = generateDiffValue(Number(mostRecentMessage.message), answer)
-    console.log("diff", diff)
-    console.log("getBoilingHot", getBoilingHotValue())
+    const directionHelpMessage = isGuessHigherThanAnswer(
+      Number(mostRecentMessage.message),
+      answer
+    )
+      ? "lower"
+      : "higher"
     if (mostRecentMessage.isPlayers && mostRecentMessage.isGuess) {
       if (diff === 0) {
         const newMessage = {
@@ -99,7 +109,7 @@ const GameContainer = () => {
         const newMessage = {
           message: `Ooooh! Almost there. You are boiling hot! You have ${countGuessesLeft(
             messages
-          )} guesses left.`,
+          )} guesses left. The answer is ${directionHelpMessage} than your guess.`,
           isPlayers: false,
           isGuess: false,
         }
@@ -108,7 +118,7 @@ const GameContainer = () => {
         const newMessage = {
           message: `Getting close! You are feeling hot! You have ${countGuessesLeft(
             messages
-          )} guesses left.`,
+          )} guesses left. The answer is ${directionHelpMessage} than your guess.`,
           isPlayers: false,
           isGuess: false,
         }
@@ -117,7 +127,7 @@ const GameContainer = () => {
         const newMessage = {
           message: `Getting warmer! You have ${countGuessesLeft(
             messages
-          )} guesses left.`,
+          )} guesses left. The answer is ${directionHelpMessage} than your guess.`,
           isPlayers: false,
           isGuess: false,
         }
@@ -126,7 +136,7 @@ const GameContainer = () => {
         const newMessage = {
           message: `Brrrr. It's getting cold! You have ${countGuessesLeft(
             messages
-          )} guesses left.`,
+          )} guesses left. The answer is ${directionHelpMessage} than your guess.`,
           isPlayers: false,
           isGuess: false,
         }
@@ -135,7 +145,7 @@ const GameContainer = () => {
         const newMessage = {
           message: `Better put on a jacket! It's freezing out! You have ${countGuessesLeft(
             messages
-          )} guesses left.`,
+          )} guesses left. The answer is ${directionHelpMessage} than your guess.`,
           isPlayers: false,
           isGuess: false,
         }
