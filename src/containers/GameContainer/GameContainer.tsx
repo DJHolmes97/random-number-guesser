@@ -13,6 +13,18 @@ const TOTAL_GUESSES = 10
 const MIN_RANGE = 0
 const MAX_RANGE = 100
 const RANGE_GAP = MAX_RANGE - MIN_RANGE
+const INITIAL_MESSAGES = [
+  {
+    message: `I am thinking of a number between ${MIN_RANGE} and ${MAX_RANGE}. You have ${TOTAL_GUESSES} attempts to get it correct.`,
+    isPlayers: false,
+    isGuess: false,
+  },
+  {
+    message: "What is your first guess?",
+    isPlayers: false,
+    isGuess: false,
+  },
+]
 const isInteger = (value: string) => {
   const pattern = /^-?\d+$/
   return pattern.test(value)
@@ -66,22 +78,13 @@ const getColdValue = () => {
   return Math.round(0.7 * RANGE_GAP)
 }
 
+const getNewRandomNumber = () => {
+  return Math.floor(Math.random() * (MAX_RANGE - MIN_RANGE + 1)) + MIN_RANGE
+}
+
 const GameContainer = () => {
-  const [messages, setMessages] = useState([
-    {
-      message: `I am thinking of a number between ${MIN_RANGE} and ${MAX_RANGE}. You have ${TOTAL_GUESSES} attempts to get it correct.`,
-      isPlayers: false,
-      isGuess: false,
-    },
-    {
-      message: "What is your first guess?",
-      isPlayers: false,
-      isGuess: false,
-    },
-  ])
-  const [answer, setAnswer] = useState(
-    Math.floor(Math.random() * (MAX_RANGE - MIN_RANGE + 1)) + MIN_RANGE
-  )
+  const [messages, setMessages] = useState(INITIAL_MESSAGES)
+  const [answer, setAnswer] = useState(getNewRandomNumber())
   const [userInput, setUserInput] = useState("")
 
   const handleChangeInput = (value: string) => {
@@ -164,6 +167,10 @@ const GameContainer = () => {
       }
       setMessages((prev) => [...prev, newMessage])
       setUserInput("")
+    } else if (userInput.toLowerCase() === "restart") {
+      setUserInput("")
+      setMessages(INITIAL_MESSAGES)
+      setAnswer(getNewRandomNumber())
     }
   }
 
