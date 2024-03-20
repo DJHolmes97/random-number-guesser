@@ -42,7 +42,9 @@ const countGuessesLeft = (messages: Message[]) => {
 
 const hasGuessesLeft = (messages: Message[]) => {
   const guesses = messages.filter((obj) => obj.isGuess === true)
-  return guesses.length <= TOTAL_GUESSES
+  console.log("guesses", guesses)
+  console.log("hasGuessesLeft", guesses.length < TOTAL_GUESSES)
+  return guesses.length < TOTAL_GUESSES
 }
 
 const generateDiffValue = (firstValue: number, secondValue: number) => {
@@ -82,6 +84,19 @@ const getNewRandomNumber = () => {
   return Math.floor(Math.random() * (MAX_RANGE - MIN_RANGE + 1)) + MIN_RANGE
 }
 
+const hasUserWon = (messages: Message[], answer: number) => {
+  let userHasWon = false
+  messages.forEach((message) => {
+    if (Number(message.message) === answer) {
+      console.log("message", message.message)
+      console.log("answer", answer)
+      console.log(Number(message.message) === answer)
+      userHasWon = true
+    }
+  })
+  return userHasWon
+}
+
 const GameContainer = () => {
   const [messages, setMessages] = useState(INITIAL_MESSAGES)
   const [answer, setAnswer] = useState(getNewRandomNumber())
@@ -103,7 +118,14 @@ const GameContainer = () => {
     if (mostRecentMessage.isPlayers && mostRecentMessage.isGuess) {
       if (diff === 0) {
         const newMessage = {
-          message: `You are correct! ${userInput} was the number I was thinking of!`,
+          message: `You are correct! ${userInput} was the number I was thinking of! Type 'restart' to start a new game.`,
+          isPlayers: false,
+          isGuess: false,
+        }
+        setMessages((prev) => [...prev, newMessage])
+      } else if (!hasGuessesLeft(messages)) {
+        const newMessage = {
+          message: `You have run out of guesses! The answer was ${answer}! To start a new game type 'restart'`,
           isPlayers: false,
           isGuess: false,
         }
@@ -154,12 +176,42 @@ const GameContainer = () => {
         }
         setMessages((prev) => [...prev, newMessage])
       }
+    } else if (
+      mostRecentMessage.isPlayers &&
+      mostRecentMessage.message === "help"
+    ) {
+      if (hasUserWon(messages, answer)) {
+        const newMessage = {
+          message: `It seems that you have won the game! Congratulations! Please type 'restart' to start a new game.`,
+          isPlayers: false,
+          isGuess: false,
+        }
+        setMessages((prev) => [...prev, newMessage])
+      } else if (hasGuessesLeft(messages)) {
+        const newMessage = {
+          message: `You still have guesses left in this game. If you would like to start a new game type 'restart'.`,
+          isPlayers: false,
+          isGuess: false,
+        }
+        setMessages((prev) => [...prev, newMessage])
+      } else {
+        const newMessage = {
+          message: `Unfortunately you have run out of guesses. To start a new game type 'restart'.`,
+          isPlayers: false,
+          isGuess: false,
+        }
+        setMessages((prev) => [...prev, newMessage])
+      }
     }
   }, [messages])
 
   const handleSubmit = () => {
-    console.log("Submitted")
-    if (isInteger(userInput) && hasGuessesLeft(messages)) {
+    console.log("hasUserWon", hasUserWon(messages, answer))
+    if (
+      isInteger(userInput) &&
+      hasGuessesLeft(messages) &&
+      !hasUserWon(messages, answer)
+    ) {
       const newMessage = {
         message: userInput,
         isPlayers: true,
@@ -171,6 +223,14 @@ const GameContainer = () => {
       setUserInput("")
       setMessages(INITIAL_MESSAGES)
       setAnswer(getNewRandomNumber())
+    } else if (userInput.toLowerCase() === "help") {
+      const newMessage = {
+        message: userInput,
+        isPlayers: true,
+        isGuess: false,
+      }
+      setMessages((prev) => [...prev, newMessage])
+      setUserInput("")
     }
   }
 
