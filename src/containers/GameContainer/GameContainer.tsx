@@ -101,12 +101,22 @@ const GameContainer = () => {
   const [messages, setMessages] = useState(INITIAL_MESSAGES)
   const [answer, setAnswer] = useState(getNewRandomNumber())
   const [userInput, setUserInput] = useState("")
+  const [computerInputLoading, setComputerInputLoading] = useState(false)
 
   const handleChangeInput = (value: string) => {
     setUserInput(value)
   }
 
   useEffect(() => {
+    setTimeout(() => {
+      if (computerInputLoading) {
+        setComputerInputLoading(false)
+      }
+    }, 1000)
+  }, [computerInputLoading])
+
+  useEffect(() => {
+    setComputerInputLoading(true)
     const mostRecentMessage = messages[messages.length - 1]
     const diff = generateDiffValue(Number(mostRecentMessage.message), answer)
     const directionHelpMessage = isGuessHigherThanAnswer(
@@ -207,43 +217,52 @@ const GameContainer = () => {
 
   const handleSubmit = () => {
     console.log("hasUserWon", hasUserWon(messages, answer))
-    if (
-      isInteger(userInput) &&
-      hasGuessesLeft(messages) &&
-      !hasUserWon(messages, answer)
-    ) {
-      const newMessage = {
-        message: userInput,
-        isPlayers: true,
-        isGuess: true,
+    if (!computerInputLoading) {
+      if (
+        isInteger(userInput) &&
+        hasGuessesLeft(messages) &&
+        !hasUserWon(messages, answer)
+      ) {
+        const newMessage = {
+          message: userInput,
+          isPlayers: true,
+          isGuess: true,
+        }
+        setMessages((prev) => [...prev, newMessage])
+        setUserInput("")
+      } else if (userInput.toLowerCase() === "restart") {
+        setUserInput("")
+        setMessages(INITIAL_MESSAGES)
+        setAnswer(getNewRandomNumber())
+      } else if (userInput.toLowerCase() === "help") {
+        const newMessage = {
+          message: userInput,
+          isPlayers: true,
+          isGuess: false,
+        }
+        setMessages((prev) => [...prev, newMessage])
+        setUserInput("")
       }
-      setMessages((prev) => [...prev, newMessage])
-      setUserInput("")
-    } else if (userInput.toLowerCase() === "restart") {
-      setUserInput("")
-      setMessages(INITIAL_MESSAGES)
-      setAnswer(getNewRandomNumber())
-    } else if (userInput.toLowerCase() === "help") {
-      const newMessage = {
-        message: userInput,
-        isPlayers: true,
-        isGuess: false,
-      }
-      setMessages((prev) => [...prev, newMessage])
-      setUserInput("")
     }
   }
 
   return (
     <div className="game-container-wrapper">
       <div className="messages-wrapper">
-        {messages.map((message, index) => (
-          <MessageBubble
-            key={index}
-            message={message.message}
-            isPlayers={message.isPlayers}
-          />
-        ))}
+        {messages.map((message, index) => {
+          return (
+            <MessageBubble
+              key={index}
+              message={message.message}
+              isPlayers={message.isPlayers}
+              isLoading={
+                index === messages.length - 1 &&
+                !message.isPlayers &&
+                computerInputLoading
+              }
+            />
+          )
+        })}
       </div>
       <div className="input-wrapper">
         <ChatInput
