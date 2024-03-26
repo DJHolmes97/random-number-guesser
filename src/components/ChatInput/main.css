@@ -3,7 +3,7 @@
 }
 
 .chat-input {
-  @apply flex-grow rounded-l-xl px-2;
+  @apply flex-grow rounded-l-xl px-2 bg-[var(--background-alt)];
 }
 
 .chat-input-button {
