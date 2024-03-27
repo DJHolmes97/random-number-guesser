@@ -1,5 +1,9 @@
 .chat-input-wrapper {
-  @apply flex flex-row w-full p-2;
+  @apply flex flex-col justify-center items-center p-2 w-full;
+}
+
+.chat-input-inner-wrapper {
+  @apply flex flex-row w-full;
 }
 
 .chat-input {
@@ -10,4 +14,8 @@
   background-color: var(--primary); /* Light green background for the player */
   color: var(--text-white);
   @apply px-4 py-3 rounded-r-xl;
+}
+
+.chat-input-status {
+  @apply mb-2 mx-5 bg-[var(--secondary)] rounded-lg px-3 py-2 w-[75%];
 }

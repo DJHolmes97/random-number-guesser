@@ -64,6 +64,14 @@ const isGuessHigherThanAnswer = (guess: number, answer: number) => {
   }
 }
 
+const isGuessInsideRange = (guess: number) => {
+  if (guess >= MIN_RANGE && guess <= MAX_RANGE) {
+    return true
+  } else {
+    return false
+  }
+}
+
 const getBoilingHotValue = () => {
   return Math.round(0.1 * RANGE_GAP)
 }
@@ -102,6 +110,7 @@ const GameContainer = () => {
   const [answer, setAnswer] = useState(getNewRandomNumber())
   const [userInput, setUserInput] = useState("")
   const [computerInputLoading, setComputerInputLoading] = useState(false)
+  const [status, setStatus] = useState<string | undefined>(undefined)
 
   const handleChangeInput = (value: string) => {
     setUserInput(value)
@@ -216,12 +225,12 @@ const GameContainer = () => {
   }, [messages])
 
   const handleSubmit = () => {
-    console.log("hasUserWon", hasUserWon(messages, answer))
     if (!computerInputLoading) {
       if (
         isInteger(userInput) &&
         hasGuessesLeft(messages) &&
-        !hasUserWon(messages, answer)
+        !hasUserWon(messages, answer) &&
+        isGuessInsideRange(Number(userInput))
       ) {
         const newMessage = {
           message: userInput,
@@ -230,10 +239,12 @@ const GameContainer = () => {
         }
         setMessages((prev) => [...prev, newMessage])
         setUserInput("")
+        setStatus(undefined)
       } else if (userInput.toLowerCase() === "restart") {
         setUserInput("")
         setMessages(INITIAL_MESSAGES)
         setAnswer(getNewRandomNumber())
+        setStatus(undefined)
       } else if (userInput.toLowerCase() === "help") {
         const newMessage = {
           message: userInput,
@@ -242,6 +253,25 @@ const GameContainer = () => {
         }
         setMessages((prev) => [...prev, newMessage])
         setUserInput("")
+        setStatus(undefined)
+      } else if (
+        isInteger(userInput) &&
+        (hasUserWon(messages, answer) || !hasGuessesLeft(messages))
+      ) {
+        setStatus(
+          `The game has ended. You can't make anymore guesses. Type 'restart' to start a new game`
+        )
+      } else if (
+        !isGuessInsideRange(Number(userInput)) &&
+        isInteger(userInput)
+      ) {
+        setStatus(
+          `That guess is outside the allowed range. Make a guess between ${MIN_RANGE} and ${MAX_RANGE} to continue.`
+        )
+      } else {
+        setStatus(
+          `Command not recognised. Type 'help' for help on how to play the game.`
+        )
       }
     }
   }
@@ -269,6 +299,7 @@ const GameContainer = () => {
           value={userInput}
           onChange={({ target: { value } }) => handleChangeInput(value)}
           onSubmit={() => handleSubmit()}
+          status={status}
         />
       </div>
     </div>
