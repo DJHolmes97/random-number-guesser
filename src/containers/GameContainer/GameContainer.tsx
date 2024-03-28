@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./main.css"
 import { ChatInput, MessageBubble } from "@/components"
 
@@ -276,6 +276,16 @@ const GameContainer = () => {
     }
   }
 
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(scrollToBottom, [messages])
+
+  useEffect(scrollToBottom, [computerInputLoading])
+
   return (
     <div className="game-container-wrapper">
       <div className="messages-wrapper">
@@ -293,6 +303,7 @@ const GameContainer = () => {
             />
           )
         })}
+        <div ref={messagesEndRef} />
       </div>
       <div className="input-wrapper">
         <ChatInput
