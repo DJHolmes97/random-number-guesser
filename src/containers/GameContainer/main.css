@@ -3,9 +3,9 @@
 }
 
 .messages-wrapper {
-  @apply flex flex-col;
+  @apply flex flex-col grow;
 }
 
 .input-wrapper {
-  @apply absolute bottom-0 w-full;
+  @apply sticky bottom-0 w-full bg-[var(--background)];
 }
