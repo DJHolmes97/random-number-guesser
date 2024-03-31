@@ -137,7 +137,7 @@ const GameContainer = () => {
     if (mostRecentMessage.isPlayers && mostRecentMessage.isGuess) {
       if (diff === 0) {
         const newMessage = {
-          message: `You are correct! ${userInput} was the number I was thinking of! Type 'restart' to start a new game.`,
+          message: `You are correct! ${answer} was the number I was thinking of! Type 'restart' to start a new game.`,
           isPlayers: false,
           isGuess: false,
         }
