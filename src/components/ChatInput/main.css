@@ -17,9 +17,10 @@
 }
 
 .chat-input-icon {
-  @apply h-4 w-4 mr-2;
+  color: var(--text);
+  @apply h-4 w-4 mr-2 flex flex-shrink-0;
 }
 
 .chat-input-status {
-  @apply mb-2 mx-5 bg-[var(--secondary)] rounded-lg px-3 py-2 w-[75%] flex flex-row items-center justify-center;
+  @apply mb-2 md:mx-5 bg-[var(--secondary)] rounded-lg px-3 py-2 w-[100%] md:w-[75%] flex flex-row items-center justify-center text-sm md:text-base;
 }
