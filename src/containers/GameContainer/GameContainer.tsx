@@ -293,6 +293,7 @@ const GameContainer = () => {
           return (
             <MessageBubble
               key={index}
+              testid={message.isPlayers ? "player-message" : "computer-message"}
               message={message.message}
               isPlayers={message.isPlayers}
               isLoading={

@@ -24,7 +24,7 @@ const Icon = () => {
 
 const Status = ({ message }: { message: string }) => {
   return (
-    <div className="chat-input-status">
+    <div className="chat-input-status" data-testid="chat-input-status">
       <Icon />
       {message}
     </div>
@@ -41,6 +41,7 @@ const ChatInput = ({ value, onChange, onSubmit, status }: ChatInputProps) => {
           value={value}
           onChange={onChange}
           className="chat-input"
+          data-testid="chat-input"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onSubmit()
@@ -49,6 +50,7 @@ const ChatInput = ({ value, onChange, onSubmit, status }: ChatInputProps) => {
         />
         <button
           className="chat-input-button"
+          data-testid="chat-input-button"
           onClick={() => {
             onSubmit()
           }}

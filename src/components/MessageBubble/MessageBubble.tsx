@@ -4,14 +4,20 @@ type MessageBubbleProps = {
   message: string
   isPlayers: boolean
   isLoading: boolean
+  testid?: string
 }
 const MessageBubble = ({
   message,
   isPlayers,
   isLoading,
+  testid,
+  ...rest
 }: MessageBubbleProps) => {
   return (
-    <div className={`message-bubble ${isPlayers ? "player" : "opponent"}`}>
+    <div
+      className={`message-bubble ${isPlayers ? "player" : "opponent"}`}
+      data-testid={testid}
+    >
       {!isLoading ? (
         message
       ) : (
