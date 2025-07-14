@@ -42,13 +42,10 @@ const countGuessesLeft = (messages: Message[]) => {
 
 const hasGuessesLeft = (messages: Message[]) => {
   const guesses = messages.filter((obj) => obj.isGuess === true)
-  console.log("guesses", guesses)
-  console.log("hasGuessesLeft", guesses.length < TOTAL_GUESSES)
   return guesses.length < TOTAL_GUESSES
 }
 
 const generateDiffValue = (firstValue: number, secondValue: number) => {
-  console.log(firstValue, secondValue)
   if (secondValue > firstValue) {
     return secondValue - firstValue
   } else {
@@ -96,9 +93,6 @@ const hasUserWon = (messages: Message[], answer: number) => {
   let userHasWon = false
   messages.forEach((message) => {
     if (Number(message.message) === answer) {
-      console.log("message", message.message)
-      console.log("answer", answer)
-      console.log(Number(message.message) === answer)
       userHasWon = true
     }
   })
